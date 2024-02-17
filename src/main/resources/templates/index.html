@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Management System</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Link to your custom CSS file -->
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+
+    <h1>Employees List</h1>
+    <a class="btn btn-primary btn-sm mb-3" th:href="@{/showNewEmployeeForm}">Add Employee</a>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Thymeleaf iteration to loop through employee list -->
+        <tr th:each="employee : ${myList}">
+            <!-- Access properties of each employee using getters -->
+            <td th:text="${employee.getFirstName()}"></td>
+            <td th:text="${employee.getLastName()}"></td>
+            <td th:text="${employee.getEmail()}"></td>
+            <td>
+                <a class="btn btn-primary" th:href="@{/showFormForUpdate/{id}(id=${employee.id})}">Update</a>
+                <a class="btn btn-danger" th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:replace="pagination :: pagination(totalPages=${totalPages}, currentPage=${currentPage}, totalItems=${totalItems})"></div>
+</div>
+</body>
+</html>
